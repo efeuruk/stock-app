@@ -30,7 +30,7 @@ app.post("/api/login", (req, res) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      res.send(user);
+      if (user) res.send(user.uid);
     })
     .catch(({ code, message }) => {
       res.send(`${code}: ${message}`);

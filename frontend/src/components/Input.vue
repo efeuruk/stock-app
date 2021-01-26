@@ -1,0 +1,36 @@
+<template>
+  <div class="form-group">
+    <label :for="id" class="form-label">{{ label }}</label>
+    <input
+      :type="type"
+      class="form-control"
+      :class="addClass"
+      :id="id"
+      @input="onInput($event.target.value)"
+    />
+    <div class="invalid-feedback">{{ errorText }}</div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Input",
+  props: {
+    id: String,
+    type: String,
+    label: String,
+    errorText: String,
+    isError: Boolean,
+  },
+  methods: {
+    onInput(value) {
+      this.$emit("input", value);
+    },
+  },
+  computed: {
+    addClass() {
+      return [{ "is-invalid": this.isError }];
+    },
+  },
+};
+</script>
