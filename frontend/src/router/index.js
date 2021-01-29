@@ -5,6 +5,8 @@ import store from '../store';
 
 import Login from "@/pages/Login";
 import Home from "@/pages/Home";
+import AddCategory from "@/pages/AddCategory";
+import AddProduct from "@/pages/AddProduct";
 
 Vue.use(Router);
 
@@ -20,6 +22,16 @@ const router = new Router({
       path: "/",
       name: "Home",
       component: Home,
+    },
+    {
+      path: "/add-category",
+      name: "AddCategory",
+      component: AddCategory,
+    },
+    {
+      path: "/add-product",
+      name: "AddProduct",
+      component: AddProduct,
     },
   ],
 });

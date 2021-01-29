@@ -1,11 +1,12 @@
 <template>
   <div class="form-group">
-    <label :for="id" class="form-label">{{ label }}</label>
+    <label v-if="label" :for="id" class="form-label">{{ label }}</label>
     <input
       :type="type"
       class="form-control"
       :class="addClass"
       :id="id"
+      :placeholder="placeholder"
       @input="onInput($event.target.value)"
     />
     <div class="invalid-feedback">{{ errorText }}</div>
@@ -19,6 +20,7 @@ export default {
     id: String,
     type: String,
     label: String,
+    placeholder: String,
     errorText: String,
     isError: Boolean,
   },

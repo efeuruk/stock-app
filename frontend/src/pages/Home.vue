@@ -1,18 +1,32 @@
 <template>
-  <div>
-    <h1>Home</h1>
-    <button class="btn btn-danger" @click="logout">Logout</button>
+  <div class="row">
+    <div class="col-6">
+      <Input placeholder="Ürün arayın" />
+    </div>
+    <div class="col-6">
+      <!--Dinamik gelecek-->
+      <select class="custom-select">
+        <option value="">Kategori seçin</option>
+        <option value="hammadde">Hammadde</option>
+        <option value="katki_malzemeleri">Katkı Malzemeleri</option>
+        <option value="laminasyon_filmi">Laminasyon Filmi</option>
+        <option value="karton_boru">Karton Boru</option>
+        <option value="palet">Palet</option>
+      </select>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import Input from "@/components/Input.vue";
 export default {
+  components: { Input },
   name: "Home",
-  methods: {
-    ...mapActions(["logout"]),
-  },
 };
 </script>
 
-<style></style>
+<style>
+body {
+  background-color: #f0f0f0;
+}
+</style>

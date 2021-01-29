@@ -17,7 +17,7 @@
         />
         <Input
           type="email"
-          label="Email Address"
+          label="Email Adresiniz"
           id="login-email"
           v-model="email"
           :isError="$v.email.$error"
@@ -25,14 +25,14 @@
         />
         <Input
           type="password"
-          label="Password"
+          label="Şifreniz"
           id="login-password"
           v-model="password"
           :isError="$v.password.$error"
           errorText="Password alanı zorunludur"
         />
-        <button type="submit" class="btn btn-block btn-warning mb-4">
-          Submit
+        <button type="submit" class="btn btn-block btn-warning mb-3">
+          Gönder
         </button>
       </form>
     </Card>
