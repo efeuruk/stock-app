@@ -8,6 +8,12 @@
         alt="stock-image"
       />
     </div>
+    <Alert
+      v-if="error"
+      text="Giriş bilgileriniz yanlış lütfen tekrar deneyiniz"
+      type="alert-danger"
+      @close="error = false"
+    />
     <Input
       type="email"
       label="Email Address"
@@ -33,15 +39,18 @@ import axios from "axios";
 import { mapActions } from "vuex";
 import { required, email } from "vuelidate/lib/validators";
 import Input from "@/components/Input";
+import Alert from "@/components/Alert";
 export default {
   name: "LoginForm",
   components: {
     Input,
+    Alert,
   },
   data() {
     return {
       email: "",
       password: "",
+      error: false,
     };
   },
   validations: {
@@ -68,6 +77,9 @@ export default {
         })
         .then((response) => {
           this.finalizeLogin(response.data);
+        })
+        .catch(() => {
+          this.error = true;
         });
     },
   },

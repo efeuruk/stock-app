@@ -1,4 +1,5 @@
 import router from '../../router';
+import axios from 'axios';
 
 const state = {
 	accessToken: window.localStorage.getItem('access_token'),
@@ -14,9 +15,11 @@ const actions = {
 		window.localStorage.setItem('access_token', uid);
 		router.push('/');
 	},
-	logout ({ commit }) {
+	async logout ({ commit }) {
     commit('setToken', null);
-    window.localStorage.removeItem('access_token');
+		window.localStorage.removeItem('access_token');
+		await axios.post("/api/signout");
+		router.push('/login');
   }
 }
 
