@@ -29,11 +29,11 @@ app.post("/api/login", (req, res) => {
   doSignInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
-      const user = userCredential.user;
+      const user: any = userCredential.user;
       if (user) res.send(user.uid);
     })
     .catch(({ code, message }) => {
-      res.send(`${code}: ${message}`);
+      res.status(404).send(`${code}: ${message}`);
     });
 });
 

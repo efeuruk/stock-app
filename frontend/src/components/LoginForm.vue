@@ -30,6 +30,7 @@
 
 <script>
 import axios from "axios";
+import { mapActions } from "vuex";
 import { required, email } from "vuelidate/lib/validators";
 import Input from "@/components/Input";
 export default {
@@ -53,20 +54,20 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["finalizeLogin"]),
     submit() {
       this.$v.$touch();
       if (this.$v.$error) return;
       this.login();
     },
-    async login() {
+    login() {
       axios
         .post("/api/login", {
           email: this.email,
           password: this.password,
         })
         .then((response) => {
-          console.log(response);
-          this.$router.push("/home");
+          this.finalizeLogin(response.data);
         });
     },
   },
