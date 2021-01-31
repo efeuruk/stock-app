@@ -3,22 +3,17 @@ import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import cors from "cors";
-import {
-  initFirebase,
-  doSignInWithEmailAndPassword,
-  doSignOut,
-  getTheCurrentUser,
-} from "./firebaseFunctions";
+import FirebaseFunctions from "./firebaseFunctions";
 
 const app = express();
-const port: number = 3002;
+const port: number = 3001;
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
-initFirebase();
+const firebaseFunctions = new FirebaseFunctions();
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
@@ -26,7 +21,8 @@ app.get("/", (req, res) => {
 
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
-  doSignInWithEmailAndPassword(email, password)
+  firebaseFunctions
+    .doSignInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
       const user: any = userCredential.user;
@@ -38,7 +34,8 @@ app.post("/api/login", (req, res) => {
 });
 
 app.post("/api/signout", (req, res) => {
-  doSignOut()
+  firebaseFunctions
+    .doSignOut()
     .then(() => {
       res.send("signout");
     })
@@ -48,7 +45,7 @@ app.post("/api/signout", (req, res) => {
 });
 
 app.get("/api/getTheCurrentUser", (req, res) => {
-  res.send(getTheCurrentUser());
+  res.send(firebaseFunctions.getTheCurrentUser());
 });
 
 app.listen(port, () => {
