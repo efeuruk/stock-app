@@ -14,36 +14,17 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import createAxiosInstance from "./helpers/create-axios-instance";
 import Loader from "@/components/Loader.vue";
 import Header from "./components/Header.vue";
 export default {
   components: { Loader, Header },
   name: "App",
   computed: {
-    ...mapGetters(["isLoggedIn", "isLoading", "getRefCount"]),
+    ...mapGetters(["isLoggedIn", "isLoading"]),
   },
   created() {
-    this.axios.interceptors.request.use(
-      (config) => {
-        this.$store.commit("loading", true);
-        return config;
-      },
-      (error) => {
-        this.$store.commit("loading", false);
-        return Promise.reject(error);
-      }
-    );
-
-    this.axios.interceptors.response.use(
-      (response) => {
-        this.$store.commit("loading", false);
-        return response;
-      },
-      (error) => {
-        this.$store.commit("loading", false);
-        return Promise.reject(error);
-      }
-    );
+    createAxiosInstance(this);
   },
 };
 </script>
