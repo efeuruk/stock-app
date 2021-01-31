@@ -2,12 +2,8 @@
   <div>
     <label v-if="label">{{ label }}</label>
     <select @change="onChange($event.target.value)" class="custom-select">
-      <option
-        v-for="(option, index) in options"
-        :key="index"
-        :value="option.value"
-      >
-        {{ option.label }}
+      <option v-for="(option, index) in options" :key="index" :value="option">
+        {{ option }}
       </option>
     </select>
   </div>

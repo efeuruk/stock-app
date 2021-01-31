@@ -1,24 +1,21 @@
 <template>
-  <div class="row">
-    <div class="col-6">
-      <Input placeholder="Ürün arayın" />
+  <div>
+    <div class="row">
+      <div class="col-6">
+        <Input placeholder="Ürün arayın" />
+      </div>
+      <div class="col-6">
+        <Select :options="categories" @onChange="updateCategory" />
+      </div>
     </div>
-    <div class="col-6">
-      <Select :options="mockSelect" />
-      <!--Dinamik gelecek-->
-      <select class="custom-select">
-        <option value="">Kategori seçin</option>
-        <option value="hammadde">Hammadde</option>
-        <option value="katki_malzemeleri">Katkı Malzemeleri</option>
-        <option value="laminasyon_filmi">Laminasyon Filmi</option>
-        <option value="karton_boru">Karton Boru</option>
-        <option value="palet">Palet</option>
-      </select>
+    <div>
+      {{ products }}
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import Input from "@/components/Input.vue";
 import Select from "@/components/Select.vue";
 export default {
@@ -26,11 +23,43 @@ export default {
   name: "Home",
   data() {
     return {
-      mockSelect: [
-        { label: "Hammadde", value: "hammadde" },
-        { label: "Katki Malzemeleri", value: "katki_malzemeleri" },
-      ],
+      categories: [],
+      selectedCategory: "",
+      products: [],
     };
+  },
+  mounted() {
+    this.getAllCategories();
+  },
+  methods: {
+    updateCategory(value) {
+      this.selectedCategory = value;
+      this.filterProductsByCategory();
+    },
+    getAllCategories() {
+      axios
+        .get("/api/getAllCategories")
+        .then((response) => {
+          this.categories = response.data;
+          this.selectedCategory = response.data[0];
+          this.filterProductsByCategory();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    filterProductsByCategory() {
+      axios
+        .post("/api/getAllProductsOfACategory", {
+          categoryName: this.selectedCategory,
+        })
+        .then((response) => {
+          this.products = response.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
   },
 };
 </script>

@@ -72,12 +72,12 @@ app.get("/api/getAllCategories", (req, res) => {
 
 app.post("/api/getAllProductsOfACategory", (req, res) => {
   const { categoryName } = req.body;
-  let products: firebase.firestore.DocumentData = [];
+  let products: firebase.firestore.DocumentData[] = [];
   firebaseFunctions
     .getAllProductsOfACategory(categoryName)
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        products.push(doc);
+        products.push(doc.data());
       });
       console.log(products);
       res.send(products);
