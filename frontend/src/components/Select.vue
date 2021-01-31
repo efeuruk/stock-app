@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form-group">
     <label v-if="label">{{ label }}</label>
     <select @change="onChange($event.target.value)" class="custom-select">
       <option v-for="(option, index) in options" :key="index" :value="option">
