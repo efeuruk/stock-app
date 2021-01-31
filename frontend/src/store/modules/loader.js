@@ -1,24 +1,24 @@
 const state = {
+	refCount: 0,
 	loading: false
 }
 
 const getters = {
-
-}
-
-const actions = {
-	show({commit}) {
-		commit("show");  
-	}
+	isLoading: (state) => state.loading,
+	getRefCount: (state) => state.refCount
 }
 
 const mutations = {
-	show(state) {
-		state.loading = true;
-	},
-	hide(state) {
-		state.loading = false;
+	loading(state, loading) {
+		console.log({loading});
+		if (loading) {
+			state.refCount++;
+			state.loading = true;
+		} else if (state.refCount > 0) {
+			state.refCount--;
+			state.loading = (state.refCount > 0);
+		}
 	}
 }
 
-export default { state, getters, actions, mutations }
+export default { state, getters, mutations }

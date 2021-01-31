@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Loader />
+    <Loader :isVisible="isLoading" />
     <div v-if="isLoggedIn">
       <Header />
       <div class="container">
@@ -13,14 +13,37 @@
   </div>
 </template>
 <script>
-import Loader from "@/components/Loader.vue";
 import { mapGetters } from "vuex";
+import Loader from "@/components/Loader.vue";
 import Header from "./components/Header.vue";
 export default {
   components: { Loader, Header },
   name: "App",
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["isLoggedIn", "isLoading", "getRefCount"]),
+  },
+  created() {
+    this.axios.interceptors.request.use(
+      (config) => {
+        this.$store.commit("loading", true);
+        return config;
+      },
+      (error) => {
+        this.$store.commit("loading", false);
+        return Promise.reject(error);
+      }
+    );
+
+    this.axios.interceptors.response.use(
+      (response) => {
+        this.$store.commit("loading", false);
+        return response;
+      },
+      (error) => {
+        this.$store.commit("loading", false);
+        return Promise.reject(error);
+      }
+    );
   },
 };
 </script>
