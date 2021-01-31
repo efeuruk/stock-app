@@ -1,7 +1,6 @@
 require("dotenv").config();
 import express from "express";
 import bodyParser from "body-parser";
-import path from "path";
 import cors from "cors";
 import FirebaseFunctions from "./firebaseFunctions";
 
@@ -11,13 +10,8 @@ const port: number = 3001;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 const firebaseFunctions = new FirebaseFunctions();
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
-});
 
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
@@ -46,6 +40,18 @@ app.post("/api/signout", (req, res) => {
 
 app.get("/api/getTheCurrentUser", (req, res) => {
   res.send(firebaseFunctions.getTheCurrentUser());
+});
+
+app.post("/api/createCategory", (req, res) => {
+  const { name } = req.body;
+  firebaseFunctions
+    .createCategory(name)
+    .then(() => {
+      res.send("Category is added");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
 });
 
 app.listen(port, () => {

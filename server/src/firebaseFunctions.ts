@@ -22,8 +22,7 @@ export default class FirebaseMethods {
   getTheCurrentUser = (): firebase.User | null => this.auth.currentUser;
 
   // data related
-  createCategory = (name: String) => {
-    console.log(this.db.collection("Categories"));
-  };
+  createCategory = (name: string) =>
+    this.db.collection("Categories").doc(name).set({});
   createProduct = () => {};
 }
