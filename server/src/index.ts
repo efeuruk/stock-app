@@ -1,4 +1,5 @@
 require("dotenv").config();
+import firebase from "firebase";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -48,6 +49,38 @@ app.post("/api/createCategory", (req, res) => {
     .createCategory(name)
     .then(() => {
       res.send("Category is added");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.get("/api/getAllCategories", (req, res) => {
+  let categories: string[] = [];
+  firebaseFunctions
+    .getAllCategories()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        categories.push(doc.id);
+      });
+      res.send(categories);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.post("/api/getAllProductsOfACategory", (req, res) => {
+  const { categoryName } = req.body;
+  let products: firebase.firestore.DocumentData = [];
+  firebaseFunctions
+    .getAllProductsOfACategory(categoryName)
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        products.push(doc);
+      });
+      console.log(products);
+      res.send(products);
     })
     .catch((error) => {
       res.send(error);

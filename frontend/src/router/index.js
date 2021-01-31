@@ -10,6 +10,18 @@ import AddProduct from "@/pages/AddProduct";
 
 Vue.use(Router);
 
+const doesntRequiresAuth = {
+  meta: {
+    requiresAuth: false,
+  },
+};
+
+const requiresAuth = {
+  meta: {
+    requiresAuth: true,
+  },
+};
+
 const router = new Router({
   mode: "history",
   routes: [
@@ -17,21 +29,25 @@ const router = new Router({
       path: "/login",
       name: "Login",
       component: Login,
+      ...doesntRequiresAuth
     },
     {
       path: "/",
       name: "Home",
       component: Home,
+      ...requiresAuth
     },
     {
       path: "/add-category",
       name: "AddCategory",
       component: AddCategory,
+      ...requiresAuth
     },
     {
       path: "/add-product",
       name: "AddProduct",
       component: AddProduct,
+      ...requiresAuth
     },
   ],
 });

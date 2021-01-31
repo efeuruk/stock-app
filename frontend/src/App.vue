@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Loader :isVisible="isLoading" />
-    <div v-if="isLoggedIn">
+    <div v-if="isLoggedIn && isLoginRequired">
       <Header />
       <div class="container">
         <router-view />
@@ -14,17 +14,20 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import createAxiosInstance from "./helpers/create-axios-instance";
+import createAxiosInstance from "@/helpers/create-axios-instance";
 import Loader from "@/components/Loader.vue";
-import Header from "./components/Header.vue";
+import Header from "@/components/Header.vue";
 export default {
   components: { Loader, Header },
   name: "App",
-  computed: {
-    ...mapGetters(["isLoggedIn", "isLoading"]),
-  },
   created() {
     createAxiosInstance(this);
+  },
+  computed: {
+    ...mapGetters(["isLoggedIn", "isLoading"]),
+    isLoginRequired() {
+      return this.$route.meta.requiresAuth;
+    },
   },
 };
 </script>
