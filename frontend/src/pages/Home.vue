@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row">
+    <div class="row pb-3">
       <div class="col-6">
         <Input placeholder="Ürün arayın" />
       </div>
@@ -8,9 +8,9 @@
         <Select :options="categories" @onChange="updateCategory" />
       </div>
     </div>
-    <div>
-      {{ products }}
-    </div>
+    <Table :headers="headers" :rows="products">
+      <button class="btn btn-primary">Düzenle</button>
+    </Table>
   </div>
 </template>
 
@@ -18,13 +18,16 @@
 import axios from "axios";
 import Input from "@/components/Input.vue";
 import Select from "@/components/Select.vue";
+import Table from "@/components/Table.vue";
+
 export default {
-  components: { Input, Select },
+  components: { Input, Select, Table },
   name: "Home",
   data() {
     return {
       categories: [],
       selectedCategory: "",
+      headers: [],
       products: [],
     };
   },
@@ -55,6 +58,7 @@ export default {
         })
         .then((response) => {
           this.products = response.data;
+          this.headers = Object.keys(response.data[0]);
         })
         .catch((error) => {
           console.error(error);

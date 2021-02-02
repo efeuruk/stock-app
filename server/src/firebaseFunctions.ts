@@ -24,13 +24,34 @@ export default class FirebaseMethods {
   getTheCurrentUser = (): firebase.User | null => this.auth.currentUser;
 
   // data related
-  // TODO: create document object for the newly created category
+  createADocument = (collection: string, document: string, setObject: object) =>
+    this.db.collection(collection).doc(document).set(setObject);
+
   createCategory = (name: string): Promise<void> =>
-    this.db.collection("Categories").doc(name).set({});
+    this.createADocument("Categories", name, {});
 
-  createProduct = () => {};
+  createProduct = (
+    isim: string,
+    birim: string,
+    kategori: string,
+    olmasiGereken: number,
+    stokMiktari: number,
+    tedarikSuresi: string
+  ): Promise<void> =>
+    this.createADocument("Products", isim, {
+      birim,
+      kategori,
+      olmasiGereken,
+      stokMiktari,
+      tedarikSuresi,
+    });
 
-  getAllCategories = () => this.db.collection("Categories").get();
+  getAllDocumentsFromACollection = (collectionName: string) =>
+    this.db.collection(collectionName).get();
+
+  getAllCategories = () => this.getAllDocumentsFromACollection("Categories");
+
+  getAllProducts = () => this.getAllDocumentsFromACollection("Products");
 
   getAllProductsOfACategory = (categoryName: string) =>
     this.db.collection("Products").where("kategori", "==", categoryName).get();

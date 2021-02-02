@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
 const firebaseFunctions = new FirebaseFunctions();
 
+// Auth
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
   firebaseFunctions
@@ -43,18 +44,7 @@ app.get("/api/getTheCurrentUser", (req, res) => {
   res.send(firebaseFunctions.getTheCurrentUser());
 });
 
-app.post("/api/createCategory", (req, res) => {
-  const { name } = req.body;
-  firebaseFunctions
-    .createCategory(name)
-    .then(() => {
-      res.send("Category is added");
-    })
-    .catch((error) => {
-      res.send(error);
-    });
-});
-
+// Data
 app.get("/api/getAllCategories", (req, res) => {
   let categories: string[] = [];
   firebaseFunctions
@@ -70,6 +60,18 @@ app.get("/api/getAllCategories", (req, res) => {
     });
 });
 
+app.post("/api/createCategory", (req, res) => {
+  const { name } = req.body;
+  firebaseFunctions
+    .createCategory(name)
+    .then(() => {
+      res.send("Category is added");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
 app.post("/api/getAllProductsOfACategory", (req, res) => {
   const { categoryName } = req.body;
   let products: firebase.firestore.DocumentData[] = [];
@@ -77,9 +79,15 @@ app.post("/api/getAllProductsOfACategory", (req, res) => {
     .getAllProductsOfACategory(categoryName)
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        products.push(doc.data());
+        products.push({
+          isim: doc.id,
+          kategori: doc.get("kategori"),
+          stokMiktari: doc.get("stokMiktari"),
+          olmasiGereken: doc.get("olmasiGereken"),
+          birimi: doc.get("birimi"),
+          tedarikSuresi: doc.get("tedarikSuresi"),
+        });
       });
-      console.log(products);
       res.send(products);
     })
     .catch((error) => {

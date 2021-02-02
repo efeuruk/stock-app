@@ -10,7 +10,6 @@ const getters = {
 
 const mutations = {
 	loading(state, loading) {
-		console.log({loading});
 		if (loading) {
 			state.refCount++;
 			state.loading = true;
