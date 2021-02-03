@@ -38,8 +38,8 @@ export default class FirebaseMethods {
     this.createADocument("Products", body.isim, {
       birim: body.birim,
       kategori: body.kategori,
-      olmasiGereken: body.olmasiGereken,
-      stokMiktari: body.stokMiktari,
+      olmasiGereken: body.olmasiGereken as number,
+      stokMiktari: body.stokMiktari as number,
       tedarikSuresi: body.tedarikSuresi,
     });
 

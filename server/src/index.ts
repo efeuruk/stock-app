@@ -73,7 +73,6 @@ app.post("/api/createCategory", (req, res) => {
 });
 
 app.post("/api/createProduct", (req, res) => {
-  console.log(req.body);
   firebaseFunctions
     .createProduct(req.body)
     .then(() => {
@@ -96,7 +95,7 @@ app.post("/api/getAllProductsOfACategory", (req, res) => {
           kategori: doc.get("kategori"),
           stokMiktari: doc.get("stokMiktari"),
           olmasiGereken: doc.get("olmasiGereken"),
-          birimi: doc.get("birimi"),
+          birim: doc.get("birim"),
           tedarikSuresi: doc.get("tedarikSuresi"),
         });
       });
