@@ -5,6 +5,7 @@
       :type="type"
       class="form-control"
       :class="addClass"
+      :value="value"
       :id="id"
       :placeholder="placeholder"
       @input="onInput($event.target.value)"
@@ -20,6 +21,7 @@ export default {
     id: String,
     type: String,
     label: String,
+    value: [String, Number],
     placeholder: String,
     errorText: String,
     isError: Boolean,

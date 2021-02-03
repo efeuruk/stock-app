@@ -58,7 +58,8 @@ export default {
         })
         .then((response) => {
           this.products = response.data;
-          this.headers = Object.keys(response.data[0]);
+          if (this.headers.length === 0)
+            this.headers = Object.keys(response.data[0]);
         })
         .catch((error) => {
           console.error(error);

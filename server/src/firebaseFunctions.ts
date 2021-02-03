@@ -3,6 +3,7 @@ require("firebase/auth");
 require("firebase/firestore");
 
 import firebaseConfig from "./consts/firebaseConfig";
+import { product } from "./interfaces";
 export default class FirebaseMethods {
   auth: firebase.auth.Auth;
   db: firebase.firestore.Firestore;
@@ -27,27 +28,22 @@ export default class FirebaseMethods {
   createADocument = (collection: string, document: string, setObject: object) =>
     this.db.collection(collection).doc(document).set(setObject);
 
+  getAllDocumentsFromACollection = (collectionName: string) =>
+    this.db.collection(collectionName).get();
+
   createCategory = (name: string): Promise<void> =>
     this.createADocument("Categories", name, {});
 
-  createProduct = (
-    isim: string,
-    birim: string,
-    kategori: string,
-    olmasiGereken: number,
-    stokMiktari: number,
-    tedarikSuresi: string
-  ): Promise<void> =>
-    this.createADocument("Products", isim, {
-      birim,
-      kategori,
-      olmasiGereken,
-      stokMiktari,
-      tedarikSuresi,
+  createProduct = (body: product): Promise<void> =>
+    this.createADocument("Products", body.isim, {
+      birim: body.birim,
+      kategori: body.kategori,
+      olmasiGereken: body.olmasiGereken,
+      stokMiktari: body.stokMiktari,
+      tedarikSuresi: body.tedarikSuresi,
     });
 
-  getAllDocumentsFromACollection = (collectionName: string) =>
-    this.db.collection(collectionName).get();
+  // update product and category
 
   getAllCategories = () => this.getAllDocumentsFromACollection("Categories");
 

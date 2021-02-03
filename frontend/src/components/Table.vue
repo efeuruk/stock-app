@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive">
+  <div v-if="rows.length > 0" class="table-responsive">
     <table class="table">
       <thead>
         <tr class="bg-dark text-white">
@@ -19,11 +19,18 @@
       </tbody>
     </table>
   </div>
+  <Card class="align-items-center p-5" v-else>
+    Bu kategoriye kayıtlı bir ürün yoktur.
+  </Card>
 </template>
 
 <script>
+import Card from "@/components/Card";
 export default {
   name: "Table",
+  components: {
+    Card,
+  },
   props: {
     headers: Array,
     rows: Array,

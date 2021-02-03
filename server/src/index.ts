@@ -72,6 +72,18 @@ app.post("/api/createCategory", (req, res) => {
     });
 });
 
+app.post("/api/createProduct", (req, res) => {
+  console.log(req.body);
+  firebaseFunctions
+    .createProduct(req.body)
+    .then(() => {
+      res.send("product is created");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
 app.post("/api/getAllProductsOfACategory", (req, res) => {
   const { categoryName } = req.body;
   let products: firebase.firestore.DocumentData[] = [];
