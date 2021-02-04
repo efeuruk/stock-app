@@ -7,6 +7,7 @@ import Login from "@/pages/Login";
 import Home from "@/pages/Home";
 import AddCategory from "@/pages/AddCategory";
 import AddProduct from "@/pages/AddProduct";
+import EditProduct from "@/pages/EditProduct";
 
 Vue.use(Router);
 
@@ -49,6 +50,12 @@ const router = new Router({
       component: AddProduct,
       ...requiresAuth
     },
+    {
+      path: "/edit-product/:id",
+      name: "EditProduct",
+      component: EditProduct,
+      ...requiresAuth
+    }
   ],
 });
 

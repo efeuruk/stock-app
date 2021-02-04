@@ -14,7 +14,16 @@
           <td v-for="(cell, index) in row" :key="index">
             {{ cell }}
           </td>
-          <td><slot /></td>
+          <td>
+            <router-link :to="`/edit-product/${row.isim}`">
+              <button class="btn btn-light mr-3">
+                <img src="@/assets/icons/edit.svg" alt="edit" />
+              </button>
+            </router-link>
+            <button @click="deleteProduct(row.isim)" class="btn btn-light">
+              <img src="@/assets/icons/trash.svg" alt="trash" />
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -25,6 +34,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Card from "@/components/Card";
 export default {
   name: "Table",
@@ -34,6 +44,21 @@ export default {
   props: {
     headers: Array,
     rows: Array,
+  },
+  methods: {
+    deleteProduct(name) {
+      axios
+        .post("/api/deleteProduct", {
+          productName: name,
+        })
+        .then((response) => {
+          console.log(response);
+          this.$router.go("");
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+    },
   },
 };
 </script>

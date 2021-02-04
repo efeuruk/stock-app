@@ -4,6 +4,10 @@ require("firebase/firestore");
 
 import firebaseConfig from "./consts/firebaseConfig";
 import { product } from "./interfaces";
+
+const COLLECTION_CATEGORIES = "Categories";
+const COLLECTION_PRODUCTS = "Products";
+
 export default class FirebaseMethods {
   auth: firebase.auth.Auth;
   db: firebase.firestore.Firestore;
@@ -16,7 +20,7 @@ export default class FirebaseMethods {
   // user related
   doSignInWithEmailAndPassword = (
     email: string,
-    password: string
+    password: string,
   ): Promise<firebase.auth.UserCredential> =>
     this.auth.signInWithEmailAndPassword(email, password);
 
@@ -32,10 +36,10 @@ export default class FirebaseMethods {
     this.db.collection(collectionName).get();
 
   createCategory = (name: string): Promise<void> =>
-    this.createADocument("Categories", name, {});
+    this.createADocument(COLLECTION_CATEGORIES, name, {});
 
   createProduct = (body: product): Promise<void> =>
-    this.createADocument("Products", body.isim, {
+    this.createADocument(COLLECTION_PRODUCTS, body.isim, {
       birim: body.birim,
       kategori: body.kategori,
       olmasiGereken: body.olmasiGereken as number,
@@ -43,12 +47,20 @@ export default class FirebaseMethods {
       tedarikSuresi: body.tedarikSuresi,
     });
 
+  deleteProduct = (name: string): Promise<void> =>
+    this.db.collection(COLLECTION_PRODUCTS).doc(name).delete();
+
   // update product and category
 
-  getAllCategories = () => this.getAllDocumentsFromACollection("Categories");
+  getAllCategories = () =>
+    this.getAllDocumentsFromACollection(COLLECTION_CATEGORIES);
 
-  getAllProducts = () => this.getAllDocumentsFromACollection("Products");
+  getAllProducts = () =>
+    this.getAllDocumentsFromACollection(COLLECTION_PRODUCTS);
 
   getAllProductsOfACategory = (categoryName: string) =>
-    this.db.collection("Products").where("kategori", "==", categoryName).get();
+    this.db
+      .collection(COLLECTION_PRODUCTS)
+      .where("kategori", "==", categoryName)
+      .get();
 }

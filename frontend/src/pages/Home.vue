@@ -8,9 +8,7 @@
         <Select :options="categories" @onChange="updateCategory" />
       </div>
     </div>
-    <Table :headers="headers" :rows="products">
-      <button class="btn btn-primary">Düzenle</button>
-    </Table>
+    <Table :headers="headers" :rows="products" />
   </div>
 </template>
 

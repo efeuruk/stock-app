@@ -106,6 +106,18 @@ app.post("/api/getAllProductsOfACategory", (req, res) => {
     });
 });
 
+app.post("/api/deleteProduct", (req, res) => {
+  const { productName } = req.body;
+  firebaseFunctions
+    .deleteProduct(productName)
+    .then(() => {
+      res.send("Product is deleted");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
 app.listen(port, () => {
   console.log(`Server started on ${port}`);
 });
