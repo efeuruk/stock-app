@@ -3,7 +3,7 @@ require("firebase/auth");
 require("firebase/firestore");
 
 import firebaseConfig from "./consts/firebaseConfig";
-import { product } from "./interfaces";
+import { product, productDoc } from "./interfaces";
 
 const COLLECTION_CATEGORIES = "Categories";
 const COLLECTION_PRODUCTS = "Products";
@@ -29,11 +29,41 @@ export default class FirebaseMethods {
   getTheCurrentUser = (): firebase.User | null => this.auth.currentUser;
 
   // data related
+
+  // General firebase helpers
   createADocument = (collection: string, document: string, setObject: object) =>
     this.db.collection(collection).doc(document).set(setObject);
 
   getAllDocumentsFromACollection = (collectionName: string) =>
     this.db.collection(collectionName).get();
+
+  deleteACollection = (collection: string, document: string) =>
+    this.db.collection(collection).doc(document).delete();
+
+  // Product related
+  getAllCategories = (): Promise<
+    firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+  > => this.getAllDocumentsFromACollection(COLLECTION_CATEGORIES);
+
+  getAllProducts = (): Promise<
+    firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+  > => this.getAllDocumentsFromACollection(COLLECTION_PRODUCTS);
+
+  getAllProductsOfACategory = (
+    categoryName: string,
+  ): Promise<
+    firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+  > =>
+    this.db
+      .collection(COLLECTION_PRODUCTS)
+      .where("kategori", "==", categoryName)
+      .get();
+
+  getProduct = (
+    productName: string,
+  ): Promise<
+    firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
+  > => this.db.collection(COLLECTION_PRODUCTS).doc(productName).get();
 
   createCategory = (name: string): Promise<void> =>
     this.createADocument(COLLECTION_CATEGORIES, name, {});
@@ -47,20 +77,23 @@ export default class FirebaseMethods {
       tedarikSuresi: body.tedarikSuresi,
     });
 
-  deleteProduct = (name: string): Promise<void> =>
-    this.db.collection(COLLECTION_PRODUCTS).doc(name).delete();
-
-  // update product and category
-
-  getAllCategories = () =>
-    this.getAllDocumentsFromACollection(COLLECTION_CATEGORIES);
-
-  getAllProducts = () =>
-    this.getAllDocumentsFromACollection(COLLECTION_PRODUCTS);
-
-  getAllProductsOfACategory = (categoryName: string) =>
+  updateProduct = (name: string, newDocFields: productDoc): Promise<void> =>
     this.db
       .collection(COLLECTION_PRODUCTS)
-      .where("kategori", "==", categoryName)
-      .get();
+      .doc(name)
+      .update({
+        birim: newDocFields.birim,
+        kategori: newDocFields.kategori,
+        olmasiGereken: newDocFields.olmasiGereken as number,
+        stokMiktari: newDocFields.stokMiktari as number,
+        tedarikSuresi: newDocFields.tedarikSuresi,
+      });
+
+  updateCategory = (name: string) => {};
+
+  deleteProduct = (name: string): Promise<void> =>
+    this.deleteACollection(COLLECTION_PRODUCTS, name);
+
+  deleteCategory = (name: string): Promise<void> =>
+    this.deleteACollection(COLLECTION_CATEGORIES, name);
 }

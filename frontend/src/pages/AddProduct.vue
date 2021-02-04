@@ -90,7 +90,6 @@ export default {
   methods: {
     updateCategory(value) {
       this.selectedCategory = value;
-      console.log(this.selectedCategory);
     },
     getAllCategories() {
       axios

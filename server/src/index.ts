@@ -4,6 +4,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import FirebaseFunctions from "./firebaseFunctions";
+import { productDoc } from "./interfaces";
 
 const app = express();
 const port: number = 3001;
@@ -60,29 +61,6 @@ app.get("/api/getAllCategories", (req, res) => {
     });
 });
 
-app.post("/api/createCategory", (req, res) => {
-  const { name } = req.body;
-  firebaseFunctions
-    .createCategory(name)
-    .then(() => {
-      res.send("Category is added");
-    })
-    .catch((error) => {
-      res.send(error);
-    });
-});
-
-app.post("/api/createProduct", (req, res) => {
-  firebaseFunctions
-    .createProduct(req.body)
-    .then(() => {
-      res.send("product is created");
-    })
-    .catch((error) => {
-      res.send(error);
-    });
-});
-
 app.post("/api/getAllProductsOfACategory", (req, res) => {
   const { categoryName } = req.body;
   let products: firebase.firestore.DocumentData[] = [];
@@ -106,12 +84,85 @@ app.post("/api/getAllProductsOfACategory", (req, res) => {
     });
 });
 
+app.post("/api/getProduct", (req, res) => {
+  const { productName } = req.body;
+  firebaseFunctions
+    .getProduct(productName)
+    .then((doc) => {
+      res.send(doc.data());
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.post("/api/createCategory", (req, res) => {
+  const { name } = req.body;
+  firebaseFunctions
+    .createCategory(name)
+    .then(() => {
+      res.send("Category is added");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.post("/api/createProduct", (req, res) => {
+  firebaseFunctions
+    .createProduct(req.body)
+    .then(() => {
+      res.send("product is created");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.post("/api/updateProduct", (req, res) => {
+  const {
+    isim,
+    birim,
+    kategori,
+    stokMiktari,
+    tedarikSuresi,
+    olmasiGereken,
+  } = req.body;
+  const product: productDoc = {
+    birim,
+    kategori,
+    stokMiktari,
+    tedarikSuresi,
+    olmasiGereken,
+  };
+  firebaseFunctions
+    .updateProduct(isim, product)
+    .then(() => {
+      res.send("Document updated");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
 app.post("/api/deleteProduct", (req, res) => {
   const { productName } = req.body;
   firebaseFunctions
     .deleteProduct(productName)
     .then(() => {
       res.send("Product is deleted");
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.post("/api/deleteCategory", (req, res) => {
+  const { categoryName } = req.body;
+  firebaseFunctions
+    .deleteCategory(categoryName)
+    .then(() => {
+      res.send("Category is deleted");
     })
     .catch((error) => {
       res.send(error);
