@@ -79,9 +79,9 @@ export default {
     console.log(this.selectedCategory);
   },
   methods: {
-    async getProduct() {
+    getProduct() {
       const productId = this.$route.params.id;
-      await axios
+      axios
         .post("/api/getProduct", {
           productName: productId,
         })

@@ -47,17 +47,21 @@ export default {
   },
   methods: {
     deleteProduct(name) {
-      axios
-        .post("/api/deleteProduct", {
-          productName: name,
-        })
-        .then((response) => {
-          console.log(response);
-          this.$router.go("");
-        })
-        .catch((error) => {
-          throw new Error(error);
-        });
+      if (confirm("Ürünü silmek istiyor musunuz?")) {
+        axios
+          .post("/api/deleteProduct", {
+            productName: name,
+          })
+          .then((response) => {
+            console.log(response);
+            this.$router.go("");
+          })
+          .catch((error) => {
+            throw new Error(error);
+          });
+      } else {
+        return;
+      }
     },
   },
 };
