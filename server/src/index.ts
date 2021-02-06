@@ -61,6 +61,28 @@ app.get("/api/getAllCategories", (req, res) => {
     });
 });
 
+app.get("/api/getAllProducts", (req, res) => {
+  let products: firebase.firestore.DocumentData[] = [];
+  firebaseFunctions
+    .getAllProducts()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        products.push({
+          isim: doc.id,
+          kategori: doc.get("kategori"),
+          stokMiktari: doc.get("stokMiktari"),
+          olmasiGereken: doc.get("olmasiGereken"),
+          birim: doc.get("birim"),
+          tedarikSuresi: doc.get("tedarikSuresi"),
+        });
+      });
+      res.send(products);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
 app.post("/api/getAllProductsOfACategory", (req, res) => {
   const { categoryName } = req.body;
   let products: firebase.firestore.DocumentData[] = [];

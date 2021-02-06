@@ -47,7 +47,7 @@ export default class FirebaseMethods {
 
   getAllProducts = (): Promise<
     firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
-  > => this.getAllDocumentsFromACollection(COLLECTION_PRODUCTS);
+  > => this.db.collection(COLLECTION_PRODUCTS).orderBy("kategori").get();
 
   getAllProductsOfACategory = (
     categoryName: string,

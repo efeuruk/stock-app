@@ -41,19 +41,17 @@ export default {
       axios
         .get("/api/getAllCategories")
         .then((response) => {
-          this.categories = response.data;
-          this.selectedCategory = response.data[0];
-          this.filterProductsByCategory();
+          this.categories = ["Hepsi", ...response.data];
+          this.selectedCategory = "Hepsi";
+          this.getAllProducts();
         })
         .catch((error) => {
           console.error(error);
         });
     },
-    filterProductsByCategory() {
+    getAllProducts() {
       axios
-        .post("/api/getAllProductsOfACategory", {
-          categoryName: this.selectedCategory,
-        })
+        .get("/api/getAllProducts")
         .then((response) => {
           this.products = response.data;
           if (this.headers.length === 0)
@@ -62,6 +60,24 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+    },
+    filterProductsByCategory() {
+      if (this.selectedCategory === "Hepsi") {
+        this.getAllProducts();
+      } else {
+        axios
+          .post("/api/getAllProductsOfACategory", {
+            categoryName: this.selectedCategory,
+          })
+          .then((response) => {
+            this.products = response.data;
+            if (this.headers.length === 0)
+              this.headers = Object.keys(response.data[0]);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     },
   },
 };
