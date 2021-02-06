@@ -16,7 +16,7 @@
 <script>
 import Input from "@/components/Input";
 import axios from "axios";
-import { required, alphaNum } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "AddCategory",
@@ -31,7 +31,6 @@ export default {
   validations: {
     kategori: {
       required,
-      alphaNum,
     },
   },
   methods: {

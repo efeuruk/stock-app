@@ -6,6 +6,7 @@
       class="form-control"
       :class="addClass"
       :value="value"
+      :step="step"
       :id="id"
       :placeholder="placeholder"
       @input="onInput($event.target.value)"
@@ -21,6 +22,7 @@ export default {
     id: String,
     type: String,
     label: String,
+    step: String,
     value: [String, Number],
     placeholder: String,
     errorText: String,

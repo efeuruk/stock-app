@@ -22,6 +22,7 @@
       <Input
         label="Olması Gereken"
         type="number"
+        step="0.5"
         v-model="olmasiGereken"
         :isError="$v.olmasiGereken.$error"
         errorText="Olması gereken alanı zorunludur"
@@ -29,6 +30,7 @@
       <Input
         label="Stok Miktarı"
         type="number"
+        step="0.5"
         v-model="stokMiktari"
         :isError="$v.stokMiktari.$error"
         errorText="Stok miktarı alanı zorunludur"
@@ -46,7 +48,7 @@
 
 <script>
 import axios from "axios";
-import { required, alphaNum, numeric } from "vuelidate/lib/validators";
+import { required, alphaNum, decimal } from "vuelidate/lib/validators";
 import Input from "@/components/Input.vue";
 import Select from "@/components/Select.vue";
 export default {
@@ -66,7 +68,6 @@ export default {
   validations: {
     isim: {
       required,
-      alphaNum,
     },
     birim: {
       required,
@@ -74,11 +75,11 @@ export default {
     },
     olmasiGereken: {
       required,
-      numeric,
+      decimal,
     },
     stokMiktari: {
       required,
-      numeric,
+      decimal,
     },
     tedarikSuresi: {
       required,
