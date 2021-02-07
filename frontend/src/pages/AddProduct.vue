@@ -100,7 +100,7 @@ export default {
           this.selectedCategory = response.data[0];
         })
         .catch((error) => {
-          console.error(error);
+          throw new Error(error);
         });
     },
     submit() {
@@ -123,7 +123,7 @@ export default {
           this.$router.push("/");
         })
         .catch((error) => {
-          console.error(error);
+          throw new Error(error);
         });
     },
   },

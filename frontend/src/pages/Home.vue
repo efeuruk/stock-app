@@ -46,7 +46,7 @@ export default {
           this.getAllProducts();
         })
         .catch((error) => {
-          console.error(error);
+          throw new Error(error);
         });
     },
     getAllProducts() {
@@ -58,7 +58,7 @@ export default {
             this.headers = Object.keys(response.data[0]);
         })
         .catch((error) => {
-          console.error(error);
+          throw new Error(error);
         });
     },
     filterProductsByCategory() {
@@ -75,7 +75,7 @@ export default {
               this.headers = Object.keys(response.data[0]);
           })
           .catch((error) => {
-            console.error(error);
+            throw new Error(error);
           });
       }
     },
