@@ -2,7 +2,7 @@
   <div>
     <div class="row pb-3">
       <div class="col-6">
-        <Input placeholder="Ürün arayın" />
+        <Input v-model="q" placeholder="Ürün arayın" />
       </div>
       <div class="col-6">
         <Select :options="categories" @onChange="updateCategory" />
@@ -27,7 +27,14 @@ export default {
       selectedCategory: "",
       headers: [],
       products: [],
+      q: "",
     };
+  },
+  watch: {
+    q() {
+      // put a delay
+      this.getAllProducts();
+    },
   },
   mounted() {
     this.getAllCategories();
@@ -51,7 +58,9 @@ export default {
     },
     getAllProducts() {
       axios
-        .get("/api/getAllProducts")
+        .post("/api/getAllProducts", {
+          q: this.q,
+        })
         .then((response) => {
           this.products = response.data;
           if (this.headers.length === 0)

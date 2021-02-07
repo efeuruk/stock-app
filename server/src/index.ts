@@ -61,7 +61,8 @@ app.get("/api/getAllCategories", (req, res) => {
     });
 });
 
-app.get("/api/getAllProducts", (req, res) => {
+app.post("/api/getAllProducts", (req, res) => {
+  const { q } = req.body;
   let products: firebase.firestore.DocumentData[] = [];
   firebaseFunctions
     .getAllProducts()
@@ -76,6 +77,9 @@ app.get("/api/getAllProducts", (req, res) => {
           tedarikSuresi: doc.get("tedarikSuresi"),
         });
       });
+      products = products.filter((item) =>
+        item.isim.toLowerCase().includes(q.toLowerCase()),
+      );
       res.send(products);
     })
     .catch((error) => {
