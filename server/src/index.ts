@@ -9,7 +9,7 @@ import FirebaseFunctions from "./firebaseFunctions";
 import { productDoc } from "./interfaces";
 
 const app = express();
-const port: number = 3001;
+const port: string | undefined | number = process.env.PORT || 3001;
 
 const staticFileMiddleware = express.static("./frontend/dist");
 
