@@ -30,7 +30,12 @@ export default {
   },
   methods: {
     onInput(value) {
-      this.$emit("input", value);
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      this.timeout = setTimeout(() => {
+        this.$emit("input", value);
+      }, 200);
     },
   },
   computed: {

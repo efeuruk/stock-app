@@ -2,7 +2,7 @@
   <div>
     <div class="row pb-3">
       <div class="col-6">
-        <Input v-model="q" placeholder="Ürün arayın" />
+        <Input v-model="q" @input="getAllProducts" placeholder="Ürün arayın" />
       </div>
       <div class="col-6">
         <Select :options="categories" @onChange="updateCategory" />
@@ -29,12 +29,6 @@ export default {
       products: [],
       q: "",
     };
-  },
-  watch: {
-    q() {
-      // put a delay
-      this.getAllProducts();
-    },
   },
   mounted() {
     this.getAllCategories();
