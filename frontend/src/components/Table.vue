@@ -33,7 +33,7 @@
     </table>
   </div>
   <Card class="align-items-center p-5" v-else>
-    Bu kategoriye kayıtlı bir ürün yoktur.
+    Bu ürün maalesef mevcut değil.
   </Card>
 </template>
 

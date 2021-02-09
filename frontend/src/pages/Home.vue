@@ -8,6 +8,13 @@
         <Select :options="categories" @onChange="updateCategory" />
       </div>
     </div>
+    <Card class="mb-4 bg-warning" v-if="warnings.length !== 0">
+      <ul>
+        <li v-for="(warning, index) in warnings" :key="index">
+          {{ warning }}
+        </li>
+      </ul>
+    </Card>
     <Table :headers="headers" :rows="products" />
   </div>
 </template>
@@ -17,9 +24,10 @@ import axios from "axios";
 import Input from "@/components/Input.vue";
 import Select from "@/components/Select.vue";
 import Table from "@/components/Table.vue";
+import Card from "@/components/Card.vue";
 
 export default {
-  components: { Input, Select, Table },
+  components: { Input, Select, Table, Card },
   name: "Home",
   data() {
     return {
@@ -28,6 +36,7 @@ export default {
       headers: [],
       products: [],
       q: "",
+      warnings: [],
     };
   },
   mounted() {
@@ -59,6 +68,7 @@ export default {
           this.products = response.data;
           if (this.headers.length === 0)
             this.headers = Object.keys(response.data[0]);
+          this.checkStockStatus();
         })
         .catch((error) => {
           throw new Error(error);
@@ -81,6 +91,23 @@ export default {
             throw new Error(error);
           });
       }
+    },
+    checkStockStatus() {
+      const itemsWithLeadTime = this.products.filter(
+        (product) => product.tedarikSuresi !== "yok",
+      );
+      itemsWithLeadTime.forEach((item) => {
+        const weeksToStockWillLast =
+          Math.floor(item.stokMiktari / item.olmasiGereken) * 7;
+        const leadTime = parseInt(item.tedarikSuresi.split(" ")[0]);
+        if (leadTime > weeksToStockWillLast) {
+          this.warnings.push(
+            `${item.isim} için ${weeksToStockWillLast /
+              7} haftalık stoğunuz kaldı, ${leadTime /
+              7} haftalık zamanda geliyor, sipariş vermelisiniz`,
+          );
+        }
+      });
     },
   },
 };
