@@ -10,7 +10,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) in rows" :key="index">
+        <tr
+          :class="addClassToRow(row)"
+          v-for="(row, index) in rows"
+          :key="index"
+        >
           <td v-for="(cell, index) in row" :key="index">
             {{ cell }}
           </td>
@@ -62,6 +66,9 @@ export default {
       } else {
         return;
       }
+    },
+    addClassToRow(row) {
+      return [{ "bg-danger text-light": row.stokMiktari < row.olmasiGereken }];
     },
   },
 };

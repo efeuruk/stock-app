@@ -11,6 +11,7 @@
       <Select
         label="Kategoriler"
         :options="categories"
+        :selectedValue="selectedCategory"
         @onChange="updateCategory"
       />
       <Input
@@ -76,8 +77,8 @@ export default {
     },
   },
   mounted() {
-    this.getProduct();
     this.getAllCategories();
+    this.getProduct();
   },
   methods: {
     getProduct() {
@@ -88,7 +89,8 @@ export default {
         })
         .then(({ data }) => {
           this.birim = data.birim;
-          this.selectedCategory = data.kategori;
+          this.updateCategory(data.kategori);
+          // this.selectedCategory = data.kategori;
           this.stokMiktari = data.stokMiktari;
           this.tedarikSuresi = data.tedarikSuresi;
           this.olmasiGereken = data.olmasiGereken;
@@ -102,7 +104,6 @@ export default {
         .get("/api/getAllCategories")
         .then((response) => {
           this.categories = response.data;
-          this.selectedCategory = response.data[0];
         })
         .catch((error) => {
           throw new Error(error);
@@ -119,8 +120,8 @@ export default {
           isim: this.$route.params.id,
           birim: this.birim,
           kategori: this.selectedCategory,
-          olmasiGereken: this.olmasiGereken,
-          stokMiktari: this.stokMiktari,
+          olmasiGereken: parseFloat(this.olmasiGereken),
+          stokMiktari: parseFloat(this.stokMiktari),
           tedarikSuresi: this.tedarikSuresi,
         })
         .then((response) => {

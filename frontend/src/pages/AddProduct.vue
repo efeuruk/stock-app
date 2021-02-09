@@ -114,8 +114,8 @@ export default {
           isim: this.isim,
           birim: this.birim,
           kategori: this.selectedCategory,
-          olmasiGereken: this.olmasiGereken,
-          stokMiktari: this.stokMiktari,
+          olmasiGereken: parseFloat(this.olmasiGereken),
+          stokMiktari: parseFloat(this.stokMiktari),
           tedarikSuresi: this.tedarikSuresi,
         })
         .then((response) => {
