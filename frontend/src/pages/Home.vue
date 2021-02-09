@@ -68,7 +68,7 @@ export default {
           this.products = response.data;
           if (this.headers.length === 0)
             this.headers = Object.keys(response.data[0]);
-          this.checkStockStatus();
+          if (this.warnings.length === 0) this.checkStockStatus();
         })
         .catch((error) => {
           throw new Error(error);
@@ -112,9 +112,3 @@ export default {
   },
 };
 </script>
-
-<style>
-body {
-  background-color: #f0f0f0;
-}
-</style>

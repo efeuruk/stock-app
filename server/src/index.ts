@@ -3,15 +3,27 @@ import firebase from "firebase";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import history from "connect-history-api-fallback";
+
 import FirebaseFunctions from "./firebaseFunctions";
 import { productDoc } from "./interfaces";
 
 const app = express();
 const port: number = 3001;
 
+const staticFileMiddleware = express.static("./frontend/dist");
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(staticFileMiddleware);
+app.use(
+  history({
+    disableDotRule: true,
+    verbose: true,
+  }),
+);
+app.use(staticFileMiddleware);
 
 const firebaseFunctions = new FirebaseFunctions();
 
