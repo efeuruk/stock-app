@@ -1,1 +1,1 @@
-web: npm run dev
+web: tsc && node server/src/dist/index.js
