@@ -1,1 +1,1 @@
-web: tsc && node server/src/dist/index.js
+web: node server/src/dist/index.js
