@@ -100,7 +100,7 @@ export default {
         const weeksToStockWillLast =
           Math.floor(item.stokMiktari / item.olmasiGereken) * 7;
         const leadTime = parseInt(item.tedarikSuresi.split(" ")[0]);
-        if (leadTime > weeksToStockWillLast) {
+        if (leadTime >= weeksToStockWillLast) {
           this.warnings.push(
             `${item.isim} için ${weeksToStockWillLast /
               7} haftalık stoğunuz kaldı, ${leadTime /
