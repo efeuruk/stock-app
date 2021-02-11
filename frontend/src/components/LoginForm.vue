@@ -1,42 +1,40 @@
 <template>
-  <div>
-    <Card>
-      <form @submit.prevent="submit()">
-        <div class="mb-3 text-center">
-          <img
-            src="https://icon-library.com/images/inventory-icon/inventory-icon-8.jpg"
-            width="200"
-            alt="stock-image"
-          />
-        </div>
-        <Alert
-          v-if="error"
-          text="Giriş bilgileriniz yanlış lütfen tekrar deneyiniz"
-          type="alert-danger"
-          @close="error = false"
+  <Card>
+    <form @submit.prevent="submit()">
+      <div class="mb-3 text-center">
+        <img
+          src="https://icon-library.com/images/inventory-icon/inventory-icon-8.jpg"
+          width="200"
+          alt="stock-image"
         />
-        <Input
-          type="email"
-          label="Email Adresiniz"
-          id="login-email"
-          v-model="email"
-          :isError="$v.email.$error"
-          errorText="Email alanı zorunludur"
-        />
-        <Input
-          type="password"
-          label="Şifreniz"
-          id="login-password"
-          v-model="password"
-          :isError="$v.password.$error"
-          errorText="Password alanı zorunludur"
-        />
-        <button type="submit" class="btn btn-block btn-warning mb-3">
-          Gönder
-        </button>
-      </form>
-    </Card>
-  </div>
+      </div>
+      <Alert
+        v-if="error"
+        text="Giriş bilgileriniz yanlış lütfen tekrar deneyiniz"
+        type="alert-danger"
+        @close="error = false"
+      />
+      <Input
+        type="email"
+        label="Email Adresiniz"
+        id="login-email"
+        v-model="email"
+        :isError="$v.email.$error"
+        errorText="Email alanı zorunludur"
+      />
+      <Input
+        type="password"
+        label="Şifreniz"
+        id="login-password"
+        v-model="password"
+        :isError="$v.password.$error"
+        errorText="Password alanı zorunludur"
+      />
+      <button type="submit" class="btn btn-block btn-warning mb-3">
+        Gönder
+      </button>
+    </form>
+  </Card>
 </template>
 
 <script>
@@ -96,6 +94,11 @@ export default {
 <style scoped>
 form {
   padding: 0 20px;
-  width: 500px;
+  min-width: 300px;
+}
+@media only screen and (min-width: 768px) {
+  form {
+    width: 500px;
+  }
 }
 </style>
