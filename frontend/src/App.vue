@@ -3,7 +3,7 @@
     <Loader :isVisible="isLoading" />
     <div v-if="isLoggedIn && isLoginRequired">
       <Header />
-      <div class="container content">
+      <div class="container content mt-5">
         <router-view />
       </div>
     </div>
@@ -31,9 +31,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.content {
-  margin-top: 100px;
-}
-</style>
