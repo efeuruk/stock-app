@@ -1,1 +1,1 @@
-web: node server/src/dist/index.js
+web: npm run prod
