@@ -20,7 +20,7 @@
           </td>
           <td>
             <router-link :to="`/edit-product/${row.isim}`">
-              <button class="btn btn-light mr-3">
+              <button class="btn btn-light mr-xl-3">
                 <img src="@/assets/icons/edit.svg" alt="edit" />
               </button>
             </router-link>
