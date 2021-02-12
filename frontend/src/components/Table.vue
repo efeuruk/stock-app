@@ -56,8 +56,7 @@ export default {
           .post("/api/deleteProduct", {
             productName: name,
           })
-          .then((response) => {
-            console.log(response);
+          .then(() => {
             this.$router.go("");
           })
           .catch((error) => {

@@ -44,8 +44,7 @@ export default {
         .post("/api/createCategory", {
           name: this.kategori,
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.$router.push("/");
         })
         .catch((error) => {

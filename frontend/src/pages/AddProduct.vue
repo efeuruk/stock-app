@@ -118,8 +118,7 @@ export default {
           stokMiktari: parseFloat(this.stokMiktari),
           tedarikSuresi: this.tedarikSuresi,
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.$router.push("/");
         })
         .catch((error) => {
