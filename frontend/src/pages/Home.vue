@@ -49,7 +49,7 @@ export default {
     },
     getAllCategories() {
       axios
-        .get("/api/getAllCategories")
+        .get("/api/data/getAllCategories")
         .then((response) => {
           this.categories = ["Hepsi", ...response.data];
           this.selectedCategory = "Hepsi";
@@ -61,7 +61,7 @@ export default {
     },
     getAllProducts() {
       axios
-        .post("/api/getAllProducts", {
+        .post("/api/data/getAllProducts", {
           q: this.q,
         })
         .then((response) => {
@@ -79,7 +79,7 @@ export default {
         this.getAllProducts();
       } else {
         axios
-          .post("/api/getAllProductsOfACategory", {
+          .post("/api/data/getAllProductsOfACategory", {
             categoryName: this.selectedCategory,
           })
           .then((response) => {

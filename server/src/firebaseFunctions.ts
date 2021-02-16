@@ -12,7 +12,7 @@ export default class FirebaseMethods {
   auth: firebase.auth.Auth;
   db: firebase.firestore.Firestore;
   constructor() {
-    firebase.initializeApp(firebaseConfig);
+    if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
     this.auth = firebase.auth();
     this.db = firebase.firestore();
   }

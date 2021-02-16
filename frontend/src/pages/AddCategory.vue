@@ -41,7 +41,7 @@ export default {
     },
     addCategory() {
       axios
-        .post("/api/createCategory", {
+        .post("/api/data/createCategory", {
           name: this.kategori,
         })
         .then(() => {

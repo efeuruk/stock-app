@@ -76,7 +76,7 @@ export default {
     },
     login() {
       axios
-        .post("/api/login", {
+        .post("/api/auth/login", {
           email: this.email,
           password: this.password,
         })

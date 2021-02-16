@@ -70,7 +70,8 @@ var FirebaseMethods = /** @class */ (function () {
         this.deleteCategory = function (name) {
             return _this.deleteACollection(COLLECTION_CATEGORIES, name);
         };
-        app_1.default.initializeApp(firebaseConfig_1.default);
+        if (app_1.default.apps.length === 0)
+            app_1.default.initializeApp(firebaseConfig_1.default);
         this.auth = app_1.default.auth();
         this.db = app_1.default.firestore();
     }

@@ -16,7 +16,7 @@ export default function(self) {
     response => {
       self.$store.commit("loading", false);
       if(response.data.code === "permission-denied" && response.data.name === "FirebaseError") {
-        store.dispatch('logout');
+        store.dispatch("logout");
       }
       return response;
     },

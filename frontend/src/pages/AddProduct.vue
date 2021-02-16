@@ -94,7 +94,7 @@ export default {
     },
     getAllCategories() {
       axios
-        .get("/api/getAllCategories")
+        .get("/api/data/getAllCategories")
         .then((response) => {
           this.categories = response.data;
           this.selectedCategory = response.data[0];
@@ -110,7 +110,7 @@ export default {
     },
     addProduct() {
       axios
-        .post("/api/createProduct", {
+        .post("/api/data/createProduct", {
           isim: this.isim,
           birim: this.birim,
           kategori: this.selectedCategory,

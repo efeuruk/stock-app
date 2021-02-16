@@ -53,7 +53,7 @@ export default {
     deleteProduct(name) {
       if (confirm("Ürünü silmek istiyor musunuz?")) {
         axios
-          .post("/api/deleteProduct", {
+          .post("/api/data/deleteProduct", {
             productName: name,
           })
           .then(() => {

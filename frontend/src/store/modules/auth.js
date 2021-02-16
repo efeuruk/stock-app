@@ -18,7 +18,7 @@ const actions = {
 	async logout ({ commit }) {
     commit('setToken', null);
 		window.localStorage.removeItem('access_token');
-		await axios.post("/api/signout");
+		await axios.post("/api/auth/signout");
 		router.push('/login');
   }
 }

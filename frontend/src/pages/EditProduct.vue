@@ -84,7 +84,7 @@ export default {
     getProduct() {
       const productId = this.$route.params.id;
       axios
-        .post("/api/getProduct", {
+        .post("/api/data/getProduct", {
           productName: productId,
         })
         .then(({ data }) => {
@@ -101,7 +101,7 @@ export default {
     },
     getAllCategories() {
       axios
-        .get("/api/getAllCategories")
+        .get("/api/data/getAllCategories")
         .then((response) => {
           this.categories = response.data;
         })
@@ -116,7 +116,7 @@ export default {
     },
     updateProduct() {
       axios
-        .post("/api/updateProduct", {
+        .post("/api/data/updateProduct", {
           isim: this.$route.params.id,
           birim: this.birim,
           kategori: this.selectedCategory,
